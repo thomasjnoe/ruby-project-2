@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 #Check if array is sorted in ascending order
 def sorted?(arr)
@@ -15,7 +15,7 @@ def bubble_sort(arr)
 	sorted_arr = arr.clone
 	len = sorted_arr.length-1
 	until sorted?(sorted_arr) do
-		sorted_arr[0..len].each.with_index do |item, index|
+		sorted_arr[0..len].each_with_index do |item, index|
 			if sorted_arr[index + 1].nil? == false && sorted_arr[index] > sorted_arr[index + 1]
 				sorted_arr[index], sorted_arr[index + 1] = sorted_arr[index + 1], sorted_arr[index]
 			end
