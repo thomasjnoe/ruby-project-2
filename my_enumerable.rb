@@ -66,5 +66,3 @@ def multiply_els(arr)
 	arr.my_inject { |product, num| product * num }
 end
 
-
-

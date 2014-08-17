@@ -1,1 +1,1 @@
-Advanced Ruby Building Block Project Solutions from The Odin Project
+Bubble Sort and Enumerable Practice for The Odin Project
