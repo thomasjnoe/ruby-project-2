@@ -37,7 +37,13 @@ module Enumerable
 	end
 
 	def my_count(arg = nil)
-		arg ? self.my_select { |i| i == arg }.size : self.my_select { |i| yield(i) }.size
+		if arg
+			self.my_select { |i| i == arg }.size
+		elsif block_given?
+			self.my_select { |i| yield(i) }.size
+		else
+			self.size
+		end
 	end
 
 	def my_map(&my_proc)
