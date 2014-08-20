@@ -249,7 +249,7 @@ describe "Enumerable Module" do
 				expect(array.my_none? { |x| x.length == 3 } ).to eql false
 			end
 
-			it "returns false for word lengths less than 3" do
+			it "returns false for word lengths equal to 4" do
 				expect(array.my_none? { |x| x.length == 4 } ).to eql true
 			end
 		end
@@ -289,5 +289,112 @@ describe "Enumerable Module" do
 		end
 	end
 
+
+	describe "#my_count" do
+		context "with empty array" do
+			it "returns 0" do
+				array = []
+				expect(array.my_count).to eql 0
+			end
+		end
+
+		context "with an array of integers" do
+			let (:array) { [1,-2,3,4,5,-6] }
+
+			it "returns 6 without an argumentor block" do
+				expect(array.my_count).to eql 6
+			end
+
+			it "returns 1 for argument of 3" do
+				expect(array.my_count(3)).to eql 1
+			end
+
+			it "returns 0 for argument of 100" do
+				expect(array.my_count(100)).to eql 0
+			end
+
+			it "returns 2 for x < 0" do
+				expect(array.my_count { |x| x < 0 } ).to eql 2
+			end
+
+			it "returns 4 for x > 0" do
+				expect(array.my_count { |x| x > 0 } ).to eql 4
+			end
+
+			it "returns 0 for x > 10" do
+				expect(array.my_count { |x| x > 10 } ).to eql 0
+			end
+		end
+
+		context "with an array of strings" do
+			let (:array) { ["lol","hello","goodbye","lonely hearts club band"] }
+
+			it "returns 4 without an argument or block" do
+				expect(array.my_count).to eql 4
+			end
+
+			it "returns 1 with an argument of 'lol'" do
+				expect(array.my_count('lol')).to eql 1
+			end
+
+			it "returns 0 with an argument of 'hey'" do
+				expect(array.my_count('hey')).to eql 0
+			end
+
+			it "returns 3 for array including words containing 'lo' " do
+				expect(array.my_count { |x| x.include? "lo" } ).to eql 3
+			end
+
+			it "returns 0 for array including words containing 'z' " do
+				expect(array.my_count { |x| x.include? "z" } ).to eql 0
+			end
+
+			it "returns 1 for word lengths equal to 3" do
+				expect(array.my_count { |x| x.length == 3 } ).to eql 1
+			end
+
+			it "returns 0 for word lengths equal to 4" do
+				expect(array.my_count { |x| x.length == 4 } ).to eql 0
+			end
+		end
+
+		context "with a mixed array" do
+			let (:array) { ["lol","hello",4,100,{ :word => "bird", :number => 8 },"hey"] }
+
+			it "returns 6 without an argument or block" do
+				expect(array.my_count).to eql 6
+			end
+
+			it "returns 3 for class of strings" do
+				expect(array.my_count { |x| x.class == String } ).to eql 3
+			end
+
+			it "returns 2 for class of fixnums" do
+				expect(array.my_count { |x| x.class == Fixnum } ).to eql 2
+			end
+
+			it "returns 1 for class of hash" do
+				expect(array.my_count { |x| x.class == Hash } ).to eql 1
+			end
+
+			it "returns 0 for class of array" do
+				expect(array.my_count { |x| x.class == Array} ).to eql 0
+			end
+		end
+
+		context "with a string" do
+			it "raises NoMethodError" do
+				string = "Hello World!"
+				expect { string.my_count }.to raise_exception NoMethodError
+			end
+		end
+
+		context "with an integer" do
+			it "raises NoMethodError" do
+				int = 5
+				expect { int.my_count }.to raise_exception NoMethodError
+			end
+		end
+	end
 
 end
