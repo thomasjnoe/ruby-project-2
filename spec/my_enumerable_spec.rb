@@ -397,4 +397,52 @@ describe "Enumerable Module" do
 		end
 	end
 
+
+	describe "#my_map" do
+		context "with empty array" do
+			it "returns an empty array" do
+				array = [].my_map { |x| x + 1 }
+				expect(array).to eql []
+			end
+		end
+
+		context "with an array of integers" do
+			let (:array) { [1,2,3,4,5,6] }
+
+			it "returns multiples of 5 for x * 5" do
+				expect(array.my_map { |x| x * 5 } ).to eql [5,10,15,20,25,30]
+			end
+
+			it "returns integers plus 10 for x + 10" do
+				expect(array.my_map { |x| x + 10 } ).to eql [11,12,13,14,15,16]
+			end
+		end
+
+		context "with an array of strings" do
+			let (:array) { ["lol","hello","goodbye","lonely hearts club band"] }
+
+			it "returns 'hey ' followed by the string" do
+				expect(array.my_map { |x| 'hey ' + x } ).to eql ['hey lol','hey hello','hey goodbye', 'hey lonely hearts club band']
+			end
+
+			it "returns the string twice for string times 2 " do
+				expect(array.my_map { |x| x * 2 } ).to eql ['lollol','hellohello','goodbyegoodbye','lonely hearts club bandlonely hearts club band']
+			end
+		end
+
+		context "with a string" do
+			it "raises NoMethodError" do
+				string = "Hello World!"
+				expect { string.my_none? { |x| x == "!" } }.to raise_exception NoMethodError
+			end
+		end
+
+		context "with an integer" do
+			it "raises NoMethodError" do
+				int = 5
+				expect { int.my_none? { |x| x == 5 } }.to raise_exception NoMethodError
+			end
+		end
+	end
+
 end
